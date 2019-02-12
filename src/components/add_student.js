@@ -63,7 +63,7 @@ import React, {Component} from 'react';
                         <label htmlFor="course">Course</label>
                     </div>
                     <div className="col input-field s10 offset-s1">
-                        <input autoComplete="off" onChange={this.handleKeyPres} name="grade" type="text" id="grade" value={grade}/>
+                        <input autoComplete="off" onChange={this.handleKeyPres} name="grade" type="number" id="grade" value={grade}/>
                         <label htmlFor="grade">Grade</label>
                     </div>
                 </div>
