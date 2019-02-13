@@ -5,8 +5,7 @@ import React, { Component} from 'react';
 import axios from 'axios';
 import AddStudent from './add_student';
 import Table from './table';
-import studentData from "../data/get_all_students";
-import { randomString } from '../helpers';
+import { formatPostData } from '../helpers';
 
 
 //needs to be changed from functional statement to class statement in order to pass info between siblings. change to class, add return, make div creation the return
@@ -20,13 +19,14 @@ class App extends Component {
         this.getStudentData();
     }
 
-    addStudent = (student) => {
+    addStudent = async (student) => {
 
-        student.id = randomString();
+    const  formattedStudent = formatPostData(student);
+    console.log('Add Student:', formattedStudent);
 
-        this.setState ({
-           students: [...this.state.students, student]
-        });
+    const resp= await axios.post('http://localhost/server/createstudent.php', formattedstudent);
+
+    console.log('Add Student Response:', resp);
     }
 
     async getStudentData() {
@@ -34,11 +34,13 @@ class App extends Component {
 
        const resp =  await axios.get('http://localhost/server/getstudentlist.php');
 
-       console.log('Resp:',resp);
+       console.log('Get List Resp:', resp);
 
-       this.setState ({
-            students: resp.data.data
-        });
+       if(resp.data.success) {
+           this.setState({
+               students: resp.data.data
+           });
+       }
     }
 
 

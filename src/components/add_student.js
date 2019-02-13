@@ -4,7 +4,9 @@ import React, {Component} from 'react';
         state={
             name:'',
             course:'',
-            grade:''
+            grade:'',
+            instructor:'',
+            notes:''
         }
 
         handleSubmit = (event) => {
@@ -17,7 +19,9 @@ import React, {Component} from 'react';
             this.setState ({
                 name:'',
                 course:'',
-                grade:''
+                grade:'',
+                instructor:'',
+                notes:''
             });
         }
 
@@ -49,7 +53,7 @@ import React, {Component} from 'react';
 
 
     render(){
-            const{name,course,grade} = this.state;
+            const{name,course,grade, instructor, notes} = this.state;
         return(
             <form onSubmit={this.handleSubmit}>
                 <div className="row">
@@ -65,6 +69,14 @@ import React, {Component} from 'react';
                     <div className="col input-field s10 offset-s1">
                         <input autoComplete="off" onChange={this.handleKeyPres} name="grade" type="number" id="grade" value={grade}/>
                         <label htmlFor="grade">Grade</label>
+                    </div>
+                    <div className="col input-field s10 offset-s1">
+                        <input autoComplete="off" onChange={this.handleKeyPres} name="instructor" type="text" id="instructor" value={instructor}/>
+                        <label htmlFor="instructor">Instructor</label>
+                    </div>
+                    <div className="col input-field s10 offset-s1">
+                        <input autoComplete="off" onChange={this.handleKeyPres} name="notes" type="text" id="notes" value={notes}/>
+                        <label htmlFor="notes">Notes</label>
                     </div>
                 </div>
                 <div className="row">
