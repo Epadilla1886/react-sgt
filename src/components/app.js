@@ -29,18 +29,27 @@ class App extends Component {
         });
     }
 
-    getStudentData(){
-        //Call server to get student data
-        axios.get('http://localhost/server/getstudentlist.php').then((response) => {
-            console.log('Server Response:', response.data.data);
+    async getStudentData() {
+//Call server to get student data
 
-            this.setState({
-                students: response.data.data
-            });
+       const resp =  await axios.get('http://localhost/server/getstudentlist.php');
+
+       console.log('Resp:',resp);
+
+       this.setState ({
+            students: resp.data.data
         });
-
-
     }
+
+
+        // axios.get('http://localhost/server/getstudentlist.php').then((response) => {
+        //     console.log('Server Response:', response.data.data);
+        //
+        //     this.setState({
+        //         students: response.data.data
+        //     });
+        // });
+
 
     deleteStudent = (id) => {
         const indexToDelete = this.state.students.findIndex((student)=>{
