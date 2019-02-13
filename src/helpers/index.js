@@ -10,3 +10,14 @@ export function randomString(length = 8){
 
     return output;
 }
+
+export function formatPostData(data){
+    const urlParams = new URLSearchParams();
+    //URLSearchParam builds query string for you
+
+    for(let [key, value] of Object.entries(data)){
+        urlParams.append(key,value);
+    }
+
+    return urlParams;
+}

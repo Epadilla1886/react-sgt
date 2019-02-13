@@ -2,10 +2,10 @@ import 'materialize-css/dist/css/materialize.min.css';
 import 'materialize-css/dist/js/materialize.min';
 import '../assets/css/app.scss';
 import React, { Component} from 'react';
+import axios from 'axios';
 import AddStudent from './add_student';
 import Table from './table';
-import studentData from "../data/get_all_students";
-import { randomString } from '../helpers';
+import { formatPostData } from '../helpers';
 
 
 //needs to be changed from functional statement to class statement in order to pass info between siblings. change to class, add return, make div creation the return
@@ -19,37 +19,58 @@ class App extends Component {
         this.getStudentData();
     }
 
-    addStudent = (student) => {
+    addStudent = async (student) => {
 
-        student.id = randomString();
+        const  formattedStudent = formatPostData(student);
 
-        this.setState ({
-           students: [...this.state.students, student]
-        });
+        await axios.post('/server/createstudent.php', formattedStudent);
+
+        this.getStudentData();
     }
 
-    getStudentData(){
-        //Call server to get student data
+    async getStudentData() {
+//Call server to get student data
 
+        const resp = await axios.get('/server/getstudentlist.php');
+
+        console.log('Get List Resp:', resp);
+
+
+        //    if(resp.data.success) {
+        //        this.setState({
+        //            students: resp.data.data
+        //        });
+        //    } else {
+        //        this.setState({
+        //            student:[]
+        //        });
+        //    }
+        // }
+
+        // short hand or statement of above code
         this.setState({
-            students: studentData
+            students: resp.data.data || []
         });
     }
 
-    deleteStudent = (id) => {
-        const indexToDelete = this.state.students.findIndex((student)=>{
-            return student.id === id;
-        });
 
-        if(indexToDelete >= 0){
-            const tempStudents = this.state.students.slice();
 
-            tempStudents.splice(indexToDelete, 1);
 
-            this.setState({
-                students: tempStudents
-            });
-        }
+        // axios.get('http://localhost/server/getstudentlist.php').then((response) => {
+        //     console.log('Server Response:', response.data.data);
+        //
+        //     this.setState({
+        //         students: response.data.data
+        //     });
+        // });
+
+
+    deleteStudent = async (id) => {
+        const formattedId = formatPostData({id: id});
+
+        await axios.post('/server/deletestudent.php', formattedId);
+
+        this.getStudentData();
     }
 
     render(){
