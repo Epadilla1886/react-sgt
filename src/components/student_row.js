@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 
 const StudentRow = (props) => {
 
@@ -6,7 +7,9 @@ const StudentRow = (props) => {
 
     return(
         <tr  className="z-depth-5 floating blue-grey lighten-3">
-            <td>{name}</td>
+            <td>
+                <Link to={`/student/${id}`}>{name}</Link>
+            </td>
             <td>{course}</td>
             <td>{grade}</td>
             <td><button onClick={()=> {props.delete(id)}} className="floating waves-effect waves-light btn red">Delete</button></td>
